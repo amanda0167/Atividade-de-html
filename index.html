@@ -1,0 +1,129 @@
+
+    <style>
+        body {
+            background-image: url('fundo-slide-2.jpg');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        
+        }
+
+        #clock {
+            font-size: 36px;
+            color: rgb(60, 98, 145);
+        }
+
+        #tasks {
+            margin-top: 20px;
+        }
+
+        #calculator {
+            margin-top: 20px;
+            background-color: rgba(120, 78,121, 0.);
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Relógio</h1>
+    <div id="clock">
+        00:00:00
+    </div>
+
+    <div id="tasks">
+        <h2>Lista de Tarefas</h2>
+        <ul id="taskList">
+            <!-- Tarefas serão adicionadas dinamicamente aqui -->
+        </ul>
+        <input type="text" id="taskInput" placeholder="Adicione uma tarefa">
+        <button onclick="addTask()">Adicionar Tarefa</button>
+    </div>
+
+    <div id="calculator">
+        <h2>Calculadora</h2>
+        <input type="text" id="calcInput" placeholder="0">
+        <br>
+        <button onclick="appendToCalcInput('1')">1</button>
+        <button onclick="appendToCalcInput('2')">2</button>
+        <button onclick="appendToCalcInput('3')">3</button>
+        <button onclick="appendToCalcInput('+')">+</button>
+        <br>
+        <button onclick="appendToCalcInput('4')">4</button>
+        <button onclick="appendToCalcInput('5')">5</button>
+        <button onclick="appendToCalcInput('6')">6</button>
+        <button onclick="appendToCalcInput('-')">-</button>
+        <br>
+        <button onclick="appendToCalcInput('7')">7</button>
+        <button onclick="appendToCalcInput('8')">8</button>
+        <button onclick="appendToCalcInput('9')">9</button>
+        <button onclick="appendToCalcInput('*')">*</button>
+        <br>
+        <button onclick="appendToCalcInput('0')">0</button>
+        <button onclick="appendToCalcInput('.')">.</button>
+        <button onclick="clearCalcInput()">C</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="appendToCalcInput('/')">/</button>
+        <br>
+    </div>
+
+    <script>
+        // Relógio digital em tempo real
+        function updateClock() {
+            const clock = document.getElementById("clock");
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Lista de tarefas
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskText = taskInput.value.trim();
+
+            if (taskText !== "") {
+                const taskList = document.getElementById("taskList");
+                const taskItem = document.createElement("li");
+                taskItem.textContent = taskText;
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remover";
+                removeButton.onclick = function () {
+                    taskList.removeChild(taskItem);
+                };
+                taskItem.appendChild(removeButton);
+                taskList.appendChild(taskItem);
+                taskInput.value = "";
+            }
+        }
+
+        // Calculadora
+        function appendToCalcInput(value) {
+            const calcInput = document.getElementById("calcInput");
+            calcInput.value += value;
+        }
+
+        function clearCalcInput() {
+            const calcInput = document.getElementById("calcInput");
+            calcInput.value = "";
+        }
+
+        function calculate() {
+            const calcInput = document.getElementById("calcInput");
+            try {
+                calcInput.value = eval(calcInput.value);
+            } catch (error) {
+                calcInput.value = "Erro";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
